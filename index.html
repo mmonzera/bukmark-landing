@@ -77,8 +77,10 @@ nav .w{display:flex;align-items:center;justify-content:space-between;height:68px
 .panel{background:var(--soft);border-radius:36px}
 .prow{display:flex;gap:24px;justify-content:center;padding:48px 24px 0;overflow:hidden}
 .prow .dev{height:440px;border-bottom:0;border-radius:44px 44px 0 0}
-.cap{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:24px 40px 36px;text-align:left}
-.cap b{display:block;font-size:15px;font-weight:600}.cap span{font-size:13.5px;color:var(--muted)}
+.prow figure{display:flex;flex-direction:column;align-items:center;width:250px;flex:none}
+.prow figcaption{width:100%;padding:22px 4px 34px;text-align:center}
+.prow figcaption b{display:block;font-size:15px;font-weight:600}
+.prow figcaption span{display:block;margin-top:2px;font-size:13.5px;color:var(--muted)}
 .three{display:flex;gap:28px;justify-content:center;margin-top:56px;overflow-x:auto;padding:0 24px 8px;scroll-snap-type:x mandatory}
 .three figure{scroll-snap-align:center;text-align:center;flex:none;width:250px}
 .three figcaption{margin-top:16px;font-size:14px;font-weight:600}.three figcaption span{display:block;font-weight:400;color:var(--muted);font-size:13px}
@@ -137,13 +139,13 @@ footer{padding:56px 0 40px}
   .hero .art.l{left:-40px!important;top:auto!important;bottom:-10px;width:130px!important}
   .hero .art.r{right:-40px!important;top:auto!important;bottom:-10px;width:130px!important}
   .hero{padding-bottom:150px}
-  .prow .dev:nth-child(3){display:none}.cap{grid-template-columns:1fr;padding:20px 24px 28px;gap:14px}
+  .prow figure:nth-child(3){display:none}
   .mini{grid-template-columns:1fr 1fr;gap:36px 24px}
   .feat,.news{grid-template-columns:1fr;gap:32px}.feat.rev .vis{order:0}.feat .vis{height:480px}.feat .vis .dev{height:440px}
   .friends{grid-template-columns:repeat(2,1fr)}
   .fgrid{grid-template-columns:1fr 1fr}.final{padding:80px 20px 140px}
 }
-@media(max-width:560px){.prow .dev:nth-child(2){display:none}.mini{grid-template-columns:1fr}.ico.h{display:none}}
+@media(max-width:560px){.prow figure:nth-child(2){display:none}.mini{grid-template-columns:1fr}.ico.h{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 /* ===================== motion & micro-interactions ===================== */
 .prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:linear-gradient(90deg,#FFE17C,#FFC42E,#F59E0B);transform-origin:0 50%;transform:scaleX(var(--prog,0))}
@@ -207,7 +209,7 @@ img[src$="mascot.svg"]{cursor:pointer;-webkit-tap-highlight-color:transparent}
 @keyframes rvin{from{opacity:0;transform:translateY(32px) scale(.985)}}
 .js .prow:not(.in) .dev{opacity:0}
 .prow.in .dev{animation:fan 1s cubic-bezier(.2,.9,.3,1.1) backwards}
-.prow.in .dev:nth-child(1){animation-delay:.05s;--r:-6deg}.prow.in .dev:nth-child(2){animation-delay:.18s;--r:0deg}.prow.in .dev:nth-child(3){animation-delay:.31s;--r:6deg}
+.prow.in figure:nth-child(1) .dev{animation-delay:.05s;--r:-6deg}.prow.in figure:nth-child(2) .dev{animation-delay:.18s;--r:0deg}.prow.in figure:nth-child(3) .dev{animation-delay:.31s;--r:6deg}
 @keyframes fan{from{opacity:0;transform:translateY(90px) rotate(var(--r,0deg)) scale(.92)}}
 
 /* devices: tilt + depth */
@@ -465,12 +467,7 @@ html,body{overflow-x:clip}
 <section id="jelajah" style="padding-top:40px"><div class="w">
   <h2 class="center" style="margin-bottom:48px">Jelajahi bookmark<br><span class="hl">dengan cara baru.</span></h2>
   <div class="panel">
-    <div class="prow" data-screens="home,save,coll"></div>
-    <div class="cap">
-      <div><b>Semua di satu tempat</b><span>Postingan banyak platform ngumpul di Home.</span></div>
-      <div><b>Namain sesuka kamu</b><span>Kasih nama panggilan saat simpan.</span></div>
-      <div><b>Rapi dalam koleksi</b><span>Kelompokkan sesuai kebutuhanmu.</span></div>
-    </div>
+    <div class="prow" data-screens="home,save,coll" data-caps="Semua di satu tempat|Postingan banyak platform ngumpul di Home.;Namain sesuka kamu|Kasih nama panggilan saat simpan.;Rapi dalam koleksi|Kelompokkan sesuai kebutuhanmu."></div>
   </div>
 </div></section>
 
@@ -651,7 +648,9 @@ const ALT={home:'Layar Home Bukmark',save:'Sheet Simpan ke Bukmark',coll:'Layar 
 function fill(d,n){d.classList.add('real');const i=new Image();i.src=SHOT(n);i.dataset.n=n;i.alt=ALT[n]||'';d.append(i)}
 function dev(n){const d=document.createElement('div');d.className='dev';fill(d,n);return d}
 document.querySelectorAll('[data-screen]').forEach(d=>fill(d,d.dataset.screen));
-document.querySelectorAll('.prow').forEach(r=>r.dataset.screens.split(',').forEach(n=>r.append(dev(n))));
+document.querySelectorAll('.prow').forEach(r=>{const caps=(r.dataset.caps||'').split(';').map(c=>c.split('|'));
+  r.dataset.screens.split(',').forEach((n,i)=>{const f=document.createElement('figure');f.append(dev(n));
+    const c=document.createElement('figcaption');c.innerHTML='<b>'+(caps[i]?.[0]||'')+'</b><span>'+(caps[i]?.[1]||'')+'</span>';f.append(c);r.append(f)})});
 document.querySelectorAll('.three').forEach(r=>{
   const caps=(r.dataset.caps||'').split(';').map(c=>c.split('|'));
   r.dataset.screens.split(',').forEach((n,i)=>{const f=document.createElement('figure');f.append(dev(n));
