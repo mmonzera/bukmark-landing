@@ -390,6 +390,13 @@ details[open] summary::after{content:"+";rotate:135deg;color:var(--ink)}
   @keyframes fly{0%{left:0;opacity:0;scale:.6}14%{opacity:1;scale:1}78%{left:calc(100% - 86px);opacity:1;scale:1}100%{left:calc(100% - 86px);opacity:0;scale:.6}}
 }
 
+/* Android badge + icon on download buttons */
+.btn .ai{width:20px;height:20px;flex:none;color:#3DDC84;--eye:#0B0B0C}
+.only{display:inline-flex;align-items:center;gap:9px;margin-top:20px;font-size:13.5px;font-weight:500;color:var(--muted);position:relative;z-index:2}
+.only .ad{width:28px;height:28px;border-radius:50%;background:#3DDC84;display:grid;place-items:center;color:#0B3B1F;--eye:#3DDC84;box-shadow:0 8px 14px -8px rgba(61,220,132,.9)}
+.only .ad svg{width:18px;height:18px}
+.hero .only{animation:up .9s cubic-bezier(.2,.8,.2,1) .78s backwards}
+.final .only{display:flex;justify-content:center;margin-top:18px}
 /* no sideways scroll on phones (clip, so the sticky nav keeps working) */
 html,body{overflow-x:clip}
 /* ===================== mobile hamburger menu ===================== */
@@ -422,6 +429,7 @@ html,body{overflow-x:clip}
 </head>
 <body>
 <div class="prog" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-android" viewBox="0 0 24 24"><path d="M4 16.5a8 8 0 0 1 16 0z" fill="currentColor"/><path d="M7.6 6.4 6 3.6M16.4 6.4 18 3.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><circle cx="9.2" cy="12.6" r="1.1" fill="var(--eye,#fff)"/><circle cx="14.8" cy="12.6" r="1.1" fill="var(--eye,#fff)"/><rect x="4" y="18" width="16" height="3.2" rx="1.6" fill="currentColor"/></symbol></svg>
 
 <nav><div class="w">
   <a class="logo" href="#"><img src="assets/mascot.svg" alt="">Bukmark</a>
@@ -447,7 +455,8 @@ html,body{overflow-x:clip}
   <img class="art spark" src="assets/sparkle2.svg" alt="" style="right:31%;top:90px;width:18px;animation-delay:-.6s">
   <h1>Bookmark favoritmu, dengan <span class="hl">nama sendiri.</span></h1>
   <p>Simpan postingan TikTok, Instagram, Shorts, Threads, X, dan LinkedIn. Kasih nama panggilan, temukan lagi dalam sedetik.</p>
-  <div class="cta"><a class="btn lg" href="Bukmark.apk" download>Download APK</a><a class="btn lg soft" href="#cara">Lihat cara kerja</a></div>
+  <div class="cta"><a class="btn lg" href="Bukmark.apk" download><svg class="ai" aria-hidden="true"><use href="#i-android"/></svg>Download APK</a><a class="btn lg soft" href="#cara">Lihat cara kerja</a></div>
+  <div class="only"><span class="ad"><svg aria-hidden="true"><use href="#i-android"/></svg></span><span>Hanya bekerja di Android</span></div>
   <div class="typer-wrap" aria-hidden="true">
     <div class="typer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span id="ty"></span><i class="caret"></i></div>
     <div class="tres" id="tres"><img id="tres-i" src="assets/tiktok.png" alt=""><div><b id="tres-n"></b><span id="tres-p"></span></div></div>
@@ -623,7 +632,8 @@ html,body{overflow-x:clip}
   <img class="art spark" src="assets/sparkle1.svg" alt="" style="right:24%;top:40px;width:22px">
   <h2>Coba <span class="hl">Bukmark.</span></h2>
   <p>Gratis, tanpa akun, cuma sekitar 3,5 MB. Simpan sekarang, namain sesuka lo.</p>
-  <a class="btn lg" href="Bukmark.apk" download>Download APK</a>
+  <a class="btn lg" href="Bukmark.apk" download><svg class="ai" aria-hidden="true"><use href="#i-android"/></svg>Download APK</a>
+  <div class="only"><span class="ad"><svg aria-hidden="true"><use href="#i-android"/></svg></span><span>Hanya bekerja di Android</span></div>
 </div></div></section>
 
 <footer><div class="w">
@@ -653,6 +663,7 @@ document.querySelectorAll('.three').forEach(r=>{
 // ===================== language (ID / EN) =====================
 const I18N=(function(){
   const EN={
+    'Hanya bekerja di Android':'Only works on Android',
     'Simpan postingan TikTok, Instagram, Shorts, Threads, X, dan LinkedIn. Kasih nama panggilan, temukan lagi dalam sedetik.':'Save posts from TikTok, Instagram, Shorts, Threads, X, and LinkedIn. Give each a nickname and find it again in a second.',
     'TikTok, Instagram, Shorts, Threads, X, dan LinkedIn.':'TikTok, Instagram, Shorts, Threads, X, and LinkedIn.',
     'resep sambal mantap':'spicy sambal recipe','Masuk':'Sign in','HP lama':'Old phone','HP baru':'New phone',
